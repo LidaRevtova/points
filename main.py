@@ -25,9 +25,9 @@ class Vector:
         """"""
         return Vector(self.x + other.x, self.y + other.y)
 
-    def __mul__(self, k):
+    def __mul__(self, other):
         """"""
-        return Vector(self.x * k, self.y * k)
+        return Vector(self.x * other.x, self.y * other.y)
 
     def int_pair(self):
         """"""
@@ -44,7 +44,6 @@ class Vector:
 
 class Line:
     """"""
-
     def __init__(self):
         """"""
         self.points = []
@@ -71,7 +70,6 @@ class Line:
             for point_number in range(-1, len(self.points) - 1):
                 pygame.draw.line(gameDisplay, color, (int(self.points[point_number].x), int(self.points[point_number].y)),
                                  (int(self.points[point_number + 1].x), int(self.points[point_number + 1].y)), width)
-
         elif style == "points":
             for point in self.points:
                 pygame.draw.circle(gameDisplay, color,
@@ -129,6 +127,7 @@ def display_help():
     data.append(["Num-", "Удалить точку"])
     data.append(["", ""])
     data.append([str(steps), "текущих точек"])
+
     pygame.draw.lines(gameDisplay, (255, 50, 50, 255), True, [
         (0, 0), (800, 0), (800, 600), (0, 600)], 5)
     for item, text in enumerate(data):
@@ -136,6 +135,7 @@ def display_help():
             text[0], True, (128, 128, 255)), (100, 100 + 30 * item))
         gameDisplay.blit(font2.render(
             text[1], True, (128, 128, 255)), (200, 100 + 30 * item))
+
 
 
 if __name__ == "__main__":
@@ -151,6 +151,7 @@ if __name__ == "__main__":
     pause = False
     color_param = 0
     color = pygame.Color(0)
+
 
     while working:
         for event in pygame.event.get():
@@ -177,11 +178,13 @@ if __name__ == "__main__":
         gameDisplay.fill((0, 0, 0))
         color_param = (color_param + 1) % 360
         color.hsla = (color_param, 100, 50, 100)
+
         all_points.draw_points(all_points.points)
         if not pause:
             all_points.set_points()
         if show_help:
             display_help()
+
         pygame.display.flip()
 
     pygame.display.quit()
